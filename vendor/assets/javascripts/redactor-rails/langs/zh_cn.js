@@ -47,6 +47,7 @@ $.Redactor.opts.langs['zh_cn'] = {
 	none: '无',
 	left: '左',
 	right: '右',
+	center: '中',
 	image_web_link: '图片网页链接',
 	text: '文本',
 	mailto: '邮箱',
@@ -70,6 +71,13 @@ $.Redactor.opts.langs['zh_cn'] = {
 	underline: '下划线',
 	alignment: '对齐方式',
 	filename: '文件名 (可选)',
-	edit: '编辑'
+	edit: '编辑',
+    textdirection: '文字方向',
+    left_to_right: '从左向右',
+    right_to_left: '从右向左',
+    fontsize:'文字大小',
+    remove_font_size: '删除字体大小',
+    fontfamily:'字体类型',
+    remove_font_family: '删除字体类型'
 };
 })( jQuery );

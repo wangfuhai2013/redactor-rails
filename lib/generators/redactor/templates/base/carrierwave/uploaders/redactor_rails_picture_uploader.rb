@@ -13,7 +13,9 @@ class RedactorRailsPictureUploader < CarrierWave::Uploader::Base
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
-    "system/redactor_assets/pictures/#{model.id}"
+    #"system/redactor_assets/pictures/#{model.id}"
+    "upload/redactor/" + model.created_at.strftime("%Y%m/%d/") + 
+       "#{model.id}_" + Digest::SHA1.hexdigest(Time.now.to_s + 'redactor')[0,8].to_s
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
@@ -30,13 +32,12 @@ class RedactorRailsPictureUploader < CarrierWave::Uploader::Base
 
   process :read_dimensions
 
+  process :resize_to_limit => [1024,5128]
+  process :quality => 80   
+
   # Create different versions of your uploaded files:
   version :thumb do
     process :resize_to_fill => [118, 100]
-  end
-
-  version :content do
-    process :resize_to_limit => [800, 800]
   end
 
   # Add a white list of extensions which are allowed to be uploaded.

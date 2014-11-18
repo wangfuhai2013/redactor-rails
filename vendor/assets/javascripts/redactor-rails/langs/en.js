@@ -44,6 +44,7 @@ $.Redactor.opts.langs['en'] = {
 	none: 'None',
 	left: 'Left',
 	right: 'Right',
+	center: 'Center',
 	image_web_link: 'Image Web Link',
 	text: 'Text',
 	mailto: 'Email',

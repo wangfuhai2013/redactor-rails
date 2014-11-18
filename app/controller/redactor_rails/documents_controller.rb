@@ -2,8 +2,11 @@ class RedactorRails::DocumentsController < ApplicationController
   before_filter :redactor_authenticate_user!
 
   def index
-    @documents = RedactorRails.document_model.where(
-        RedactorRails.document_model.new.respond_to?(RedactorRails.devise_user) ? { RedactorRails.devise_user_key => redactor_current_user.id } : { })
+    have_devise_user = RedactorRails.document_model.new.has_attribute?(:"#{RedactorRails.devise_user_key}")
+    @documents = {}
+    if(have_devise_user && redactor_current_user)
+      @documents = RedactorRails.document_model.where({ RedactorRails.devise_user_key => redactor_current_user.id })
+    end
     render :json => @documents.to_json
   end
 
@@ -12,7 +15,7 @@ class RedactorRails::DocumentsController < ApplicationController
 
     file = params[:file]
     @document.data = RedactorRails::Http.normalize_param(file, request)
-    if @document.has_attribute?(:"#{RedactorRails.devise_user_key}")
+    if @document.has_attribute?(:"#{RedactorRails.devise_user_key}") && redactor_current_user
       @document.send("#{RedactorRails.devise_user}=", redactor_current_user)
       @document.assetable = redactor_current_user
     end
@@ -24,11 +27,4 @@ class RedactorRails::DocumentsController < ApplicationController
     end
   end
 
-  private
-
-  def redactor_authenticate_user!
-    if RedactorRails.document_model.new.has_attribute?(RedactorRails.devise_user)
-      super
-    end
-  end
 end

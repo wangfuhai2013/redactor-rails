@@ -6,7 +6,9 @@ class RedactorRailsDocumentUploader < CarrierWave::Uploader::Base
   storage :file
 
   def store_dir
-    "system/redactor_assets/documents/#{model.id}"
+    #"system/redactor_assets/documents/#{model.id}"
+    "upload/redactor/" + model.created_at.strftime("%Y%m/%d/") + 
+      "#{model.id}_" + Digest::SHA1.hexdigest(Time.now.to_s + 'redactor')[0,8].to_s
   end
 
   def extension_white_list
