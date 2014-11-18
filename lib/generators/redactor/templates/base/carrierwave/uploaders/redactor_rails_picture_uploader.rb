@@ -17,7 +17,10 @@ class RedactorRailsPictureUploader < CarrierWave::Uploader::Base
     "upload/redactor/" + model.created_at.strftime("%Y%m/%d/") + 
        "#{model.id}_" + Digest::SHA1.hexdigest(Time.now.to_s + 'redactor')[0,8].to_s
   end
-
+  
+  def cache_dir
+      Rails.root.join('tmp/redactor')
+  end
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url
   #   "/images/fallback/" + [version_name, "default.png"].compact.join('_')

@@ -10,6 +10,10 @@ class RedactorRailsDocumentUploader < CarrierWave::Uploader::Base
     "upload/redactor/" + model.created_at.strftime("%Y%m/%d/") + 
       "#{model.id}_" + Digest::SHA1.hexdigest(Time.now.to_s + 'redactor')[0,8].to_s
   end
+  
+  def cache_dir
+      Rails.root.join('tmp/redactor')
+  end
 
   def extension_white_list
     RedactorRails.document_file_types
